@@ -32,7 +32,14 @@ class HashMap {
       }
     }
 
-    bucket.push([key, value]);
+    const currentLoad = this.length() / this.capacity;
+
+    if (currentLoad >= this.loadFactor) {
+      this.resize();
+    }
+
+    const newIndex = this.hash(key);
+    this.buckets[newIndex].push([key, value]);
   }
 
   get(key) {
@@ -125,6 +132,18 @@ class HashMap {
 
     return entriesArray;
   }
+
+  resize() {
+    const oldEntries = this.entries();
+
+    this.capacity *= 2;
+
+    this.buckets = new Array(this.capacity).fill(null).map(() => []);
+
+    for (const [key, value] of oldEntries) {
+      this.set(key, value);
+    }
+  }
 }
 
 const test = new HashMap();
@@ -132,19 +151,20 @@ const test = new HashMap();
 test.set("apple", "red");
 test.set("banana", "yellow");
 test.set("carrot", "orange");
+test.set("dog", "brown");
+test.set("elephant", "gray");
+test.set("frog", "green");
+test.set("grape", "purple");
+test.set("hat", "black");
+test.set("ice cream", "white");
+test.set("jacket", "blue");
+test.set("kite", "pink");
+test.set("lion", "golden");
 
-console.log(test.length());
-console.log(test.get("apple"));
-console.log(test.get("banana"));
-console.log(test.get("grape"));
-console.log(test.keys());
-console.log(test.values());
+console.log(test.capacity);
+
+test.set("moon", "silver");
+
+console.log(test.capacity);
+
 console.log(test.entries());
-
-test.clear();
-
-console.log(test.length());
-console.log(test.has("carrot"));
-console.log(test.has("dog"));
-
-console.log(test.buckets);
