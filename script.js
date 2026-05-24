@@ -85,6 +85,46 @@ class HashMap {
 
     return count;
   }
+
+  clear() {
+    this.buckets = new Array(this.capacity).fill(null).map(() => []);
+  }
+
+  keys() {
+    const keysArray = [];
+
+    for (const bucket of this.buckets) {
+      for (const entry of bucket) {
+        keysArray.push(entry[0]);
+      }
+    }
+
+    return keysArray;
+  }
+
+  values() {
+    const valuesArray = [];
+
+    for (const bucket of this.buckets) {
+      for (const entry of bucket) {
+        valuesArray.push(entry[1]);
+      }
+    }
+
+    return valuesArray;
+  }
+
+  entries() {
+    const entriesArray = [];
+
+    for (const bucket of this.buckets) {
+      for (const entry of bucket) {
+        entriesArray.push(entry);
+      }
+    }
+
+    return entriesArray;
+  }
 }
 
 const test = new HashMap();
@@ -97,6 +137,11 @@ console.log(test.length());
 console.log(test.get("apple"));
 console.log(test.get("banana"));
 console.log(test.get("grape"));
+console.log(test.keys());
+console.log(test.values());
+console.log(test.entries());
+
+test.clear();
 
 console.log(test.length());
 console.log(test.has("carrot"));
