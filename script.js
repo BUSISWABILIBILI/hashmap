@@ -25,7 +25,6 @@ class HashMap {
 
     const bucket = this.buckets[index];
 
-    // Check if key already exists
     for (let i = 0; i < bucket.length; i++) {
       if (bucket[i][0] === key) {
         bucket[i][1] = value;
@@ -33,8 +32,29 @@ class HashMap {
       }
     }
 
-    // Add new key-value pair
     bucket.push([key, value]);
+  }
+
+  get(key) {
+    const index = this.hash(key);
+
+    if (index < 0 || index >= this.buckets.length) {
+      throw new Error("Trying to access index out of bounds");
+    }
+
+    const bucket = this.buckets[index];
+
+    for (const entry of bucket) {
+      if (entry[0] === key) {
+        return entry[1];
+      }
+    }
+
+    return null;
+  }
+
+  has(key) {
+    return this.get(key) !== null;
   }
 }
 
@@ -43,5 +63,12 @@ const test = new HashMap();
 test.set("apple", "red");
 test.set("banana", "yellow");
 test.set("carrot", "orange");
+
+console.log(test.get("apple"));
+console.log(test.get("banana"));
+console.log(test.get("grape"));
+
+console.log(test.has("carrot"));
+console.log(test.has("dog"));
 
 console.log(test.buckets);
