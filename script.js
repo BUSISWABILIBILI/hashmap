@@ -56,6 +56,35 @@ class HashMap {
   has(key) {
     return this.get(key) !== null;
   }
+
+  remove(key) {
+    const index = this.hash(key);
+
+    if (index < 0 || index >= this.buckets.length) {
+      throw new Error("Trying to access index out of bounds");
+    }
+
+    const bucket = this.buckets[index];
+
+    for (let i = 0; i < bucket.length; i++) {
+      if (bucket[i][0] === key) {
+        bucket.splice(i, 1);
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  length() {
+    let count = 0;
+
+    for (const bucket of this.buckets) {
+      count += bucket.length;
+    }
+
+    return count;
+  }
 }
 
 const test = new HashMap();
@@ -64,10 +93,12 @@ test.set("apple", "red");
 test.set("banana", "yellow");
 test.set("carrot", "orange");
 
+console.log(test.length());
 console.log(test.get("apple"));
 console.log(test.get("banana"));
 console.log(test.get("grape"));
 
+console.log(test.length());
 console.log(test.has("carrot"));
 console.log(test.has("dog"));
 
