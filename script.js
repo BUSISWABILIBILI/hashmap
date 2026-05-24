@@ -161,10 +161,16 @@ test.set("jacket", "blue");
 test.set("kite", "pink");
 test.set("lion", "golden");
 
-console.log(test.capacity);
+console.log("Before resize:", test.capacity);
 
 test.set("moon", "silver");
 
-console.log(test.capacity);
+console.log("After resize:", test.capacity);
 
-console.log(test.entries());
+console.log("Get apple:", test.get("apple"));
+console.log("Has moon:", test.has("moon"));
+console.log("Remove dog:", test.remove("dog"));
+console.log("Length:", test.length());
+console.log("Keys:", test.keys());
+console.log("Values:", test.values());
+console.log("Entries:", test.entries());
